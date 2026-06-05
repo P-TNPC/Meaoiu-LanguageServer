@@ -43,6 +43,9 @@
 		"start": "node ./dist/server.js --stdio",
 		"prepublishOnly": "npm run build"
 	},
+	"peerDependencies": {
+		"meaoiu": "^0.1.0"
+	},
 	"devDependencies": {
 		"@types/node": "^25.9.1",
 		"tsup": "^8.5.1",

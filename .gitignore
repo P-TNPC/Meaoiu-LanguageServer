@@ -1,2 +1,5 @@
 /dist
 /node_modules
+/test_*.js
+/meaoiu-*.tgz
+/bun.lock
