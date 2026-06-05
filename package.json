@@ -1,0 +1,55 @@
+{
+	"name": "@meaoiu/language-server",
+	"version": "0.1.0",
+	"description": "喵谕 (Meaoiu) 语言服务器，提供代码诊断、自动补全等编辑器支持喵~",
+	"keywords": [
+		"meaoiu",
+		"language-server",
+		"lsp",
+		"esolang",
+		"喵谕",
+		"editor-tools"
+	],
+	"license": "MIT",
+	"author": {
+		"name": "TNPC",
+		"email": "TNPC@TNPC.space"
+	},
+	"homepage": "https://github.com/P-TNPC/Meaoiu#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/P-TNPC/Meaoiu-LanguageServer.git"
+	},
+	"bugs": {
+		"url": "https://github.com/P-TNPC/Meaoiu-LanguageServer/issues"
+	},
+	"type": "module",
+	"main": "./dist/server.js",
+	"bin": {
+		"meaoiu-lsp": "./dist/server.js"
+	},
+	"files": [
+		"dist"
+	],
+	"engines": {
+		"node": ">=20.0.0"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"dev": "tsup --watch",
+		"build": "tsup",
+		"start": "node ./dist/server.js --stdio",
+		"prepublishOnly": "npm run build"
+	},
+	"devDependencies": {
+		"@types/node": "^25.9.1",
+		"tsup": "^8.5.1",
+		"typescript": "^6.0.3"
+	},
+	"dependencies": {
+		"vscode-languageserver": "^10.0.0",
+		"vscode-languageserver-textdocument": "^1.0.12"
+	}
+}
