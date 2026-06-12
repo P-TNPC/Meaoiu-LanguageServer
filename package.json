@@ -38,8 +38,8 @@
 		"access": "public"
 	},
 	"scripts": {
-		"dev": "tsup --watch",
-		"build": "tsup",
+		"dev": "tsdown --watch",
+		"build": "tsdown",
 		"start": "node ./dist/server.js --stdio",
 		"prepublishOnly": "npm run build"
 	},
@@ -47,8 +47,8 @@
 		"meaoiu": "^0.1.0"
 	},
 	"devDependencies": {
-		"@types/node": "^25.9.1",
-		"tsup": "^8.5.1",
+		"@types/node": "^25.9.3",
+		"tsdown": "^0.22.2",
 		"typescript": "^6.0.3"
 	},
 	"dependencies": {

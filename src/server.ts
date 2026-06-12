@@ -56,8 +56,8 @@ connection.onInitialize(() => {
 	};
 });
 connection.onInitialized(() => {
-    connection.console.info('喵谕语言服务器启动成功喵！');
-    connection.window.showInformationMessage('ψ(｀∇´)ψ 喵谕语言服务可以用了喵~');
+	connection.console.info('喵谕语言服务器启动成功喵！');
+	connection.window.showInformationMessage('ψ(｀∇´)ψ 喵谕语言服务可以用了喵~');
 });
 
 // --- 诊断服务 ---

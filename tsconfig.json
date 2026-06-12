@@ -4,15 +4,16 @@
 		"outDir": "./dist",
 
 		// 环境规范
+		"strict": true,
 		"module": "nodenext",
 		"target": "esnext",
 		"lib": ["esnext"],
 		"types": ["node"],
 
 		// 输出附加
-		"sourceMap": true,
-		"declaration": true,
-		"declarationMap": true,
+		// "sourceMap": true,
+		// "declaration": true,
+		// "declarationMap": true,
 
 		// 类型严查
 		"noUncheckedIndexedAccess": true,
@@ -23,17 +24,18 @@
 		"noImplicitOverride": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
+		"allowUnusedLabels": false,
 		"noFallthroughCasesInSwitch": true,
 		"noPropertyAccessFromIndexSignature": true,
 
 		// 补充选项
-		"strict": true,
+		"isolatedDeclarations": true,
 		"isolatedModules": true,
 		"verbatimModuleSyntax": true,
 		"noUncheckedSideEffectImports": true,
 		"moduleDetection": "force",
 		"skipLibCheck": true
 	},
-	"include": ["src/**/*", "tsup.config.ts"],
+	"include": ["src/**/*", "tsdown.config.ts"],
 	"exclude": ["node_modules", "dist"]
 }
