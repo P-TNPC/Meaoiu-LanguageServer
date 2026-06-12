@@ -29,7 +29,7 @@
 		"noPropertyAccessFromIndexSignature": true,
 
 		// 补充选项
-		"isolatedDeclarations": true,
+		// "isolatedDeclarations": true,
 		"isolatedModules": true,
 		"verbatimModuleSyntax": true,
 		"noUncheckedSideEffectImports": true,
