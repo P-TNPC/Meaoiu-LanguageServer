@@ -141,15 +141,27 @@ connection.languages.semanticTokens.on(({ textDocument: { uri } }) => {
 });
 
 // --- 文档格式化服务 ---
-connection.onDocumentFormatting(({ textDocument: { uri } }) => {
+connection.onDocumentFormatting(async ({ textDocument: { uri } }) => {
 	const document = documents.get(uri);
 	if (!document) return [];
 
 	const sourceCode = document.getText();
-	const formattedCode = getFormattedCode(sourceCode);
+	const { errors, format } = getFormattedCode(sourceCode);
+	if (errors.length) {
+		// 直接拒绝？
+		// return connection.window.showWarningMessage(`ヾ(≧へ≦)〃 不许格式化喵！解析错 ${errors.length} 处，先修好再来喵~`);
+
+		// 弹窗确认
+		const action = await connection.window.showWarningMessage(
+			`(；OдO) 解析错 ${errors.length} 处喵！乱来会坏掉的，真的要继续吗？`,
+			{ title: '都是幻觉，继续', isForce: true },
+			{ title: '算了，改好再来', isForce: false },
+		);
+		if (!action?.isForce) return undefined; // 手慢、不理或主动取消
+	}
 
 	// 用格式化后的代码替换整个文档
-	return [TextEdit.replace({ start: { line: 0, character: 0 }, end: document.positionAt(sourceCode.length) }, formattedCode)];
+	return [TextEdit.replace({ start: { line: 0, character: 0 }, end: document.positionAt(sourceCode.length) }, format())];
 });
 
 documents.listen(connection);
