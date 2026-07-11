@@ -1,6 +1,6 @@
 {
 	"name": "@meaoiu/language-server",
-	"version": "0.1.4",
+	"version": "0.1.6",
 	"description": "喵谕 (Meaoiu) 语言服务器，提供代码诊断、自动补全等编辑器支持喵~",
 	"keywords": [
 		"meaoiu",
@@ -44,12 +44,12 @@
 		"prepublishOnly": "npm run build"
 	},
 	"peerDependencies": {
-		"meaoiu": "^0.1.4"
+		"meaoiu": "^0.1.6"
 	},
 	"devDependencies": {
-		"@types/node": "^26.1.0",
-		"tsdown": "^0.22.3",
-		"typescript": "^6.0.3"
+		"@types/node": "^26.1.1",
+		"tsdown": "^0.22.4",
+		"typescript": "^7.0.2"
 	},
 	"dependencies": {
 		"vscode-languageserver": "^10.1.0",

@@ -115,9 +115,9 @@ connection.onCompletion(({ textDocument: { uri }, position }) => {
 	const serviceState = serviceStateFor(uri);
 	if (!serviceState) return [];
 
-	return getCompletions(serviceState, position).map(({ label, kind }) => ({
-		label,
-		kind: kind === CompletionItemKind.Reference ? CompletionItemKind.Variable : kind,
+	return getCompletions(serviceState, position).map(s => ({
+		...s,
+		kind: s.kind === CompletionItemKind.Reference ? CompletionItemKind.Variable : s.kind,
 	}));
 });
 
