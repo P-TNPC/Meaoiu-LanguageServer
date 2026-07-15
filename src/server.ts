@@ -1,3 +1,4 @@
+import { exit } from 'node:process';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import {
 	CompletionItemKind,
@@ -11,8 +12,10 @@ import {
 	TextEdit,
 } from 'vscode-languageserver/node';
 
+// 创建连接
+const connection = createConnection(ProposedFeatures.all);
 // 导入 LSP 服务
-import {
+const {
 	findDefinition,
 	findReferences,
 	getCompletions,
@@ -24,9 +27,26 @@ import {
 	legend,
 	rangeOf,
 	StateManager,
-} from 'meaoiu';
+	version,
+} = await import('meaoiu').catch(err => {
+	if (!(err instanceof Error)) throw err;
+	connection.console.error(`无法触及喵谕本体：${err}\n试试全局安装 meaoiu 包喵~`);
+	// 客户端，我是废物喵！
+	connection.onInitialize(() => ({ capabilities: {} }));
+	// 再问问抢救还是放弃
+	connection.onInitialized(async () => {
+		const action = await connection.window.showErrorMessage(
+			'Σ( ° △ °|||) 喵谕本体好像不见了喵！快用 npm install -g meaoiu 请回来喵~',
+			{ title: '抓回来啦，再试一次', retry: true },
+			{ title: '好麻烦，不用了', retry: false },
+		);
+		if (action?.retry) exit(1); // 触发重启
+	});
+	connection.listen();
+	// 没有抢救，挂在原地
+	return new Promise<never>(() => {});
+});
 
-const connection = createConnection(ProposedFeatures.all);
 const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
 const stateManager = new StateManager(false);
 const serviceStateFor = (uri: string) => {
@@ -43,21 +63,17 @@ connection.onInitialize(() => {
 			hoverProvider: true,
 			definitionProvider: true,
 			referencesProvider: true,
-			completionProvider: {
-				resolveProvider: false,
-			},
-			semanticTokensProvider: {
-				legend,
-				full: true,
-			},
+			completionProvider: { resolveProvider: false },
+			semanticTokensProvider: { legend, full: true },
 			inlayHintProvider: true,
 			documentFormattingProvider: true,
 		},
 	};
 });
 connection.onInitialized(() => {
-	connection.console.info('喵谕语言服务器启动成功喵！');
-	connection.window.showInformationMessage('ψ(｀∇´)ψ 喵谕语言服务可以用了喵~');
+	const verStr = `（喵谕版本 ${version ?? '<0.1.7'}）`;
+	connection.console.info(`喵谕语言服务器启动成功喵！${verStr}`);
+	connection.window.showInformationMessage(`ψ(｀∇´)ψ 喵谕语言服务可以用了喵~ ${verStr}`);
 });
 
 // --- 诊断服务 ---
