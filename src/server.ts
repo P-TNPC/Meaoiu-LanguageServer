@@ -27,6 +27,7 @@ const {
 	legend,
 	rangeOf,
 	StateManager,
+	VERSION,
 	version,
 } = await import('meaoiu').catch(err => {
 	if (!(err instanceof Error)) throw err;
@@ -71,7 +72,7 @@ connection.onInitialize(() => {
 	};
 });
 connection.onInitialized(() => {
-	const verStr = `（喵谕版本 ${version ?? '<0.1.7'}）`;
+	const verStr = `（喵谕版本 ${VERSION ?? version ?? '<0.1.7'}）`;
 	connection.console.info(`喵谕语言服务器启动成功喵！${verStr}`);
 	connection.window.showInformationMessage(`ψ(｀∇´)ψ 喵谕语言服务可以用了喵~ ${verStr}`);
 });
@@ -83,21 +84,12 @@ documents.onDidChangeContent(({ document }) => {
 
 	const diagnostics = new Array<Diagnostic>(syntaxErrors.length + semanticErrors.length);
 	let index = 0;
+	const { Error: S_ERROR, Warning: S_WARNING } = DiagnosticSeverity;
 	for (const e of syntaxErrors) {
-		diagnostics[index++] = {
-			severity: DiagnosticSeverity.Error,
-			range: rangeOf(e),
-			message: e.message,
-			source: 'meaoiu (syntax)',
-		};
+		diagnostics[index++] = { severity: S_ERROR, range: rangeOf(e), message: e.message, source: 'meaoiu (syntax)' };
 	}
 	for (const e of semanticErrors) {
-		diagnostics[index++] = {
-			severity: DiagnosticSeverity.Warning,
-			range: rangeOf(e),
-			message: e.message,
-			source: 'meaoiu (semantic)',
-		};
+		diagnostics[index++] = { severity: S_WARNING, range: rangeOf(e), message: e.message, source: 'meaoiu (semantic)' };
 	}
 
 	connection.sendDiagnostics({ uri: document.uri, diagnostics });
